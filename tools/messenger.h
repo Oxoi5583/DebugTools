@@ -134,7 +134,8 @@ public:
         p_self.m_stream << str;
         return p_self;
     }
-    
+
+
     template<typename  T>
     friend Messenger& operator<<(Messenger& p_self, T p_data) {
         if constexpr (std::is_convertible_v<T, std::string>){
@@ -153,7 +154,7 @@ private:
     std::string m_caller = "";
 
     inline void init(){
-        m_stream.clear();
+        m_stream = std::stringstream("");
         m_caller = "";
     }
     inline void print(){
@@ -187,7 +188,3 @@ static Messenger error_messenger = {std::make_unique<ErrorOutputWrapper>(), "ERR
 
 }
 
-
-#define DEBUG_MSG(P_ARGS) DebugTools::debug_messenger << DebugTools::GetCallerInfo(std::source_location::current())  << P_ARGS << DebugTools::Flag::FLAG__END
-#define INFO_MSG(P_ARGS) DebugTools::info_messenger << DebugTools::GetCallerInfo(std::source_location::current())  << P_ARGS << DebugTools::Flag::FLAG__END
-#define ERROR_MSG(P_ARGS) DebugTools::error_messenger << DebugTools::GetCallerInfo(std::source_location::current())  << P_ARGS << DebugTools::Flag::FLAG__END
